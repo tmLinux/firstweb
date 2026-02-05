@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.8, maximum-scale=1.0, user-scalable=yes">
+    <title>tmLinux Store - Цифровые Продукты</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #00f0ff;
+            --secondary: #7c3aed;
+            --bg-dark: #0a0a0f;
+            --bg-card: #1a1a2e;
+            --text: #ffffff;
+            --text-gray: #b4b4b4;
+            --success: #00ff88;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        header {
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 0.7rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0, 240, 255, 0.2);
+        }
+
+        .header-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: nowrap;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #00f0ff 0%, #7c3aed 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            white-space: nowrap;
+        }
+
+        .header-buttons {
+            display: flex;
+            gap: 0.5rem;
+            flex-shrink: 0;
+        }
+
+        .contact-btn-small {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            padding: 0.4rem 0.8rem;
+            background: var(--bg-card);
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            border-radius: 5px;
+            color: var(--text);
+            text-decoration: none;
+            font-size: 0.75rem;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+
+        .contact-btn-small:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 240, 255, 0.3);
+        }
+
+        .contact-btn-small i {
+            font-size: 1rem;
+        }
+
+        .hero {
+            padding: 25px 0 20px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 1.6rem;
+            margin-bottom: 0.4rem;
+            background: linear-gradient(135deg, #00f0ff 0%, #7c3aed 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 0.85rem;
+            color: #00ff88;
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.7rem;
+            flex-wrap: wrap;
+        }
+
+        section {
+            padding: 12px 0;
+        }
+
+        .service-section {
+            background: var(--bg-card);
+            border-radius: 6px;
+            margin-bottom: 0.8rem;
+            border: 1px solid rgba(0, 240, 255, 0.1);
+            overflow: hidden;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: rgba(0, 240, 255, 0.05);
+        }
+
+        .section-header:hover {
+            background: rgba(0, 240, 255, 0.1);
+        }
+
+        .section-header.active {
+            border-bottom: 1px solid rgba(0, 240, 255, 0.2);
+        }
+
+        .section-title-area {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+        }
+
+        .section-icon {
+            font-size: 1.2rem;
+            color: var(--primary);
+        }
+
+        .section-title {
+            font-size: 1.05rem;
+            margin: 0;
+        }
+
+        .section-toggle {
+            font-size: 1rem;
+            color: var(--primary);
+            transition: transform 0.3s;
+        }
+
+        .section-toggle.active {
+            transform: rotate(180deg);
+        }
+
+        .section-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            padding: 0 1.2rem;
+        }
+
+        .section-content.active {
+            max-height: 3000px;
+            padding: 1.2rem;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .product-card {
+            background: rgba(10, 10, 15, 0.5);
+            border-radius: 6px;
+            padding: 1rem;
+            border: 1px solid rgba(0, 240, 255, 0.1);
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--primary);
+            box-shadow: 0 4px 15px rgba(0, 240, 255, 0.3);
+        }
+
+        .product-icon {
+            font-size: 1.6rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .product-title {
+            font-size: 0.95rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .product-desc {
+            color: var(--text-gray);
+            font-size: 0.75rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-price {
+            font-size: 1rem;
+            color: var(--success);
+            font-weight: bold;
+            margin-bottom: 0.6rem;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 0.6rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: linear-gradient(135deg, #00f0ff 0%, #7c3aed 100%);
+            color: var(--text);
+            text-decoration: none;
+            display: block;
+            text-align: center;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 240, 255, 0.4);
+        }
+
+        .badge-popular {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+
+        .currency-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        .currency-card {
+            background: rgba(10, 10, 15, 0.5);
+            border-radius: 8px;
+            padding: 1.5rem;
+            border: 1px solid rgba(0, 240, 255, 0.1);
+            transition: all 0.3s;
+        }
+
+        .currency-card:hover {
+            border-color: var(--primary);
+            box-shadow: 0 6px 20px rgba(0, 240, 255, 0.3);
+        }
+
+        .currency-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .currency-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+        }
+
+        .currency-name {
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+
+        .currency-rates {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .rate-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem;
+            background: rgba(0, 240, 255, 0.05);
+            border-radius: 6px;
+        }
+
+        .rate-label {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+
+        .rate-value {
+            color: var(--success);
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+
+        .price-list {
+            background: rgba(10, 10, 15, 0.5);
+            border-radius: 8px;
+            padding: 1.5rem;
+            border: 1px solid rgba(0, 240, 255, 0.1);
+        }
+
+        .price-list h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .price-items {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .price-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem;
+            background: rgba(0, 240, 255, 0.05);
+            border-radius: 6px;
+        }
+
+        .price-amount {
+            color: var(--text);
+            font-size: 1rem;
+        }
+
+        .price-value {
+            color: var(--success);
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .service-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .service-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 1.5rem;
+            background: transparent;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s;
+        }
+
+        .service-item:hover {
+            background: rgba(0, 240, 255, 0.05);
+            padding-left: 1.8rem;
+        }
+
+        .service-item:last-child {
+            border-bottom: none;
+        }
+
+        .service-item-icon {
+            font-size: 1.3rem;
+            color: var(--primary);
+            min-width: 30px;
+            text-align: center;
+        }
+
+        .service-item-title {
+            font-size: 1rem;
+            color: var(--text);
+        }
+
+        .badges {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.8rem;
+            max-width: 500px;
+            margin: 1.5rem auto 0;
+        }
+
+        .badge {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.8rem;
+            background: var(--bg-card);
+            border-radius: 6px;
+            border: 1px solid rgba(0, 240, 255, 0.1);
+        }
+
+        .badge i {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .badge-title {
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .badge-desc {
+            font-size: 0.75rem;
+            color: var(--text-gray);
+            text-align: center;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--bg-card);
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+        }
+
+        .modal-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .modal-subtitle {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .modal-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+            padding: 1rem 1.5rem;
+            background: linear-gradient(135deg, #00f0ff 0%, #7c3aed 100%);
+            border: none;
+            border-radius: 8px;
+            color: var(--text);
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .modal-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 240, 255, 0.5);
+        }
+
+        .modal-btn i {
+            font-size: 1.3rem;
+        }
+
+        .modal-close {
+            margin-top: 1rem;
+            color: var(--text-gray);
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .modal-close:hover {
+            color: var(--text);
+        }
+
+        footer {
+            background: var(--bg-card);
+            padding: 1.5rem 0 1rem;
+            border-top: 1px solid rgba(0, 240, 255, 0.2);
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            margin-bottom: 1rem;
+        }
+
+        .footer-content h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .footer-contacts {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-contact {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-gray);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .footer-contact:hover {
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .footer-contact strong {
+            color: var(--text);
+        }
+
+        .disclaimer {
+            background: rgba(255, 0, 255, 0.1);
+            border-left: 3px solid #ff00ff;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            text-align: left;
+        }
+
+        .footer-bottom {
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-gray);
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 768px) {
+            .header-flex {
+                flex-direction: column;
+                gap: 0.8rem;
+            }
+
+            .hero h1 {
+                font-size: 1.6rem;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .currency-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-contacts {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .section-title {
+                font-size: 1.1rem;
+            }
+
+            .section-icon {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-flex">
+                <div class="logo">
+                    <i class="fas fa-bolt"></i> tmLinux Store
+                </div>
+                <div class="header-buttons">
+                    <a href="https://t.me/tmLinux" class="contact-btn-small" target="_blank">
+                        <i class="fab fa-telegram" style="color: #0088cc;"></i>
+                        <span>Telegram</span>
+                    </a>
+                    <a href="https://linkm.me/users/tmlinux" class="contact-btn-small" target="_blank">
+                        <i class="fas fa-link" style="color: #00f0ff;"></i>
+                        <span>Link</span>
+                    </a>
+                    <a href="https://www.instagram.com/tmlinux1?igsh=MWRkaDVtMjIzYjN4Ng==" class="contact-btn-small" target="_blank">
+                        <i class="fab fa-instagram" style="color: #E4405F;"></i>
+                        <span>Instagram</span>
+                    </a>
+                    <a href="javascript:void(0)" class="contact-btn-small" onclick="copyImo()">
+                        <i class="fas fa-comment-dots" style="color: #00f0ff;"></i>
+                        <span>Imo</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Цифровые Продукты и Услуги</h1>
+            <p><i class="fas fa-bolt"></i> Быстро • <i class="fas fa-lock"></i> Безопасно • <i class="fas fa-headset"></i> Поддержка 7/24 </p>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="service-section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <div class="section-title-area">
+                    <i class="fas fa-shield-alt section-icon"></i>
+                    <h2 class="section-title">VPN Услуги</h2>
+                </div>
+                <i class="fas fa-chevron-down section-toggle"></i>
+            </div>
+            <div class="section-content">
+                <div class="products-grid">
+                    <div class="product-card">
+                        <i class="fas fa-shield-alt product-icon"></i>
+                        <h3 class="product-title">Недельный VPN</h3>
+                        <p class="product-desc">7 дней безлимитного доступа</p>
+                        <div class="product-price">40 TMT</div>
+                        <a href="javascript:void(0)" class="btn" onclick="openModal()">
+                            <i class="fas fa-shopping-cart"></i> Купить
+                        </a>
+                    </div>
+                    <div class="product-card">
+                        <span class="badge-popular">ПОПУЛЯРНЫЙ</span>
+                        <i class="fas fa-crown product-icon"></i>
+                        <h3 class="product-title">Месячный VPN</h3>
+                        <p class="product-desc">30 дней премиум доступа</p>
+                        <div class="product-price">130 TMT</div>
+                        <a href="javascript:void(0)" class="btn" onclick="openModal()">
+                            <i class="fas fa-shopping-cart"></i> Купить
+                        </a>
+                    </div>
+                    <div class="product-card">
+                        <i class="fas fa-users product-icon"></i>
+                        <h3 class="product-title">Для Дилеров</h3>
+                        <p class="product-desc">Специальные условия для дилеров</p>
+                        <div class="product-price">Договорная</div>
+                        <a href="javascript:void(0)" class="btn" onclick="openModal()">
+                            <i class="fas fa-shopping-cart"></i> Связаться
+                        </a>
+                    </div>
+                    <div class="product-card">
+                        <span class="badge-popular">ХИТ</span>
+                        <i class="fas fa-server product-icon"></i>
+                        <h3 class="product-title">Panel</h3>
+                        <p class="product-desc">Специальные условия для дилеров</p>
+                        <div class="product-price">Договорная</div>
+                        <a href="javascript:void(0)" class="btn" onclick="openModal()">
+                            <i class="fas fa-shopping-cart"></i> Связаться
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="service-section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <div class="section-title-area">
+                    <i class="fas fa-gamepad section-icon"></i>
+                    <h2 class="section-title">BGMI UC Пополнение</h2>
+                </div>
+                <i class="fas fa-chevron-down section-toggle"></i>
+            </div>
+            <div class="section-content">
+                <div class="price-list">
+                    <h3><i class="fas fa-coins"></i>UC</h3>
+                    <div class="price-items">
+                        <div class="price-item">
+                            <span class="price-amount">60 UC</span>
+                            <span class="price-value">23 TMT</span>
+                        </div>
+                        <div class="price-item">
+                            <span class="price-amount">120 UC</span>
+                            <span class="price-value">45 TMT</span>
+                        </div>
+                        <div class="price-item">
+                            <span class="price-amount">180 UC</span>
+                            <span class="price-value">65 TMT</span>
+                        </div>
+                        <div class="price-item">
+                            <span class="price-amount">325 UC</span>
+                            <span class="price-value">110 TMT</span>
+                        </div>
+                        <div class="price-item">
+                            <span class="price-amount">650 UC</span>
+                            <span class="price-value">215 TMT</span>
+                        </div>
+                        <div class="price-item">
+                            <span class="price-amount">1800 UC</span>
+                            <span class="price-value">570 TMT</span>
+                        </div>
+                    </div>
+                    <a href="javascript:void(0)" class="btn" onclick="openModal()" style="margin-top: 1rem;">
+                        <i class="fas fa-shopping-cart"></i> Купить UC
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="service-section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <div class="section-title-area">
+                    <i class="fab fa-telegram section-icon"></i>
+                    <h2 class="section-title">Telegram Услуги</h2>
+                </div>
+                <i class="fas fa-chevron-down section-toggle"></i>
+            </div>
+            <div class="section-content">
+                <div class="price-list">
+                    <h3><i class="fab fa-telegram"></i> Telegram Premium</h3>
+                    <div class="price-items">
+                        <div class="price-item">
+                            <span class="price-amount">1 месяц</span>
+                            <span class="price-value">95 TMT</span>
+                        </div>
+                        <div class="price-item">
+                            <span class="price-amount">3 месяца</span>
+                            <span class="price-value">320 TMT</span>
+                        </div>
+                        <div class="price-item">
+                            <span class="price-amount">6 месяцев</span>
+                            <span class="price-value">420 TMT</span>
+                        </div>
+                        <div class="price-item">
+                            <span class="price-amount">12 месяцев</span>
+                            <span class="price-value">770 TMT</span>
+                        </div>
+                    </div>
+                    <a href="javascript:void(0)" class="btn" onclick="openModal()" style="margin-top: 1rem;">
+                        <i class="fas fa-shopping-cart"></i> Купить Premium
+                    </a>
+                </div>
+
+                <div class="price-list" style="margin-top: 1.5rem;">
+                    <h3><i class="fas fa-star"></i> Telegram Stars</h3>
+                    <div class="price-items">
+                        <div class="price-item">
+                            <span class="price-amount">50 Stars</span>
+                            <span class="price-value">20 TMT</span>
+                        </div>
+                        <div class="price-item">
+                            <span class="price-amount">100 Stars</span>
+                            <span class="price-value">40 TMT</span>
+                        </div>
+                        <div class="price-item">
+                            <span class="price-amount">250 Stars</span>
+                            <span class="price-value">100 TMT</span>
+                        </div>
+                        <div class="price-item">
+                            <span class="price-amount">500 Stars</span>
+                            <span class="price-value">200 TMT</span>
+                        </div>
+                    </div>
+                    <a href="javascript:void(0)" class="btn" onclick="openModal()" style="margin-top: 1rem;">
+                        <i class="fas fa-shopping-cart"></i> Купить Stars
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="service-section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <div class="section-title-area">
+                    <i class="fas fa-dollar-sign section-icon"></i>
+                    <h2 class="section-title">Обмен Валют</h2>
+                </div>
+                <i class="fas fa-chevron-down section-toggle"></i>
+            </div>
+            <div class="section-content">
+                <div class="currency-grid">
+                    <div class="currency-card">
+                        <div class="currency-header">
+                            <i class="fas fa-ruble-sign currency-icon"></i>
+                            <div class="currency-name">Рубль (RUB)</div>
+                        </div>
+                        <div class="currency-rates">
+                            <div class="rate-item">
+                                <span class="rate-label">Покупка:</span>
+                                <span class="rate-value">4.5 RUB = 1 TMT</span>
+                            </div>
+                            <div class="rate-item">
+                                <span class="rate-label">Продажа:</span>
+                                <span class="rate-value">3.4 RUB = 1 TMT</span>
+                            </div>
+                        </div>
+                        <a href="javascript:void(0)" class="btn" onclick="openModal()">
+                            <i class="fas fa-exchange-alt"></i> Обменять
+                        </a>
+                    </div>
+                    <div class="currency-card">
+                        <div class="currency-header">
+                            <i class="fab fa-bitcoin currency-icon"></i>
+                            <div class="currency-name">USDT</div>
+                        </div>
+                        <div class="currency-rates">
+                            <div class="rate-item">
+                                <span class="rate-label">Покупка:</span>
+                                <span class="rate-value">1 USDT = 21 TMT</span>
+                            </div>
+                            <div class="rate-item">
+                                <span class="rate-label">Продажа:</span>
+                                <span class="rate-value">1 USDT = 23 TMT</span>
+                            </div>
+                        </div>
+                        <a href="javascript:void(0)" class="btn" onclick="openModal()">
+                            <i class="fas fa-exchange-alt"></i> Обменять
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="service-section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <div class="section-title-area">
+                    <i class="fas fa-trophy section-icon"></i>
+                    <h2 class="section-title">Другие Игры и Услуги</h2>
+                </div>
+                <i class="fas fa-chevron-down section-toggle"></i>
+            </div>
+            <div class="section-content">
+                <ul class="service-list">
+                    <li class="service-item">
+                        <i class="fas fa-robot service-item-icon"></i>
+                        <div class="service-item-title">ChatGPT Plus</div>
+                    </li>
+                    <li class="service-item">
+                        <i class="fas fa-music service-item-icon"></i>
+                        <div class="service-item-title">Spotify Music</div>
+                    </li>
+                    <li class="service-item">
+                        <i class="fab fa-steam service-item-icon"></i>
+                        <div class="service-item-title">Steam Wallet</div>
+                    </li>
+                    <li class="service-item">
+                        <i class="fab fa-tiktok service-item-icon"></i>
+                        <div class="service-item-title">TikTok Jeton</div>
+                    </li>
+                    <li class="service-item">
+                        <i class="fas fa-crown service-item-icon"></i>
+                        <div class="service-item-title">Clash Royale</div>
+                    </li>
+                    <li class="service-item">
+                        <i class="fas fa-gamepad service-item-icon"></i>
+                        <div class="service-item-title">Brawl Stars</div>
+                    </li>
+                    <li class="service-item">
+                        <i class="fas fa-trophy service-item-icon"></i>
+                        <div class="service-item-title">Clash of Clans</div>
+                    </li>
+                    <li class="service-item">
+                        <i class="fas fa-fire service-item-icon"></i>
+                        <div class="service-item-title">Free Fire</div>
+                    </li>
+                    <li class="service-item">
+                        <i class="fas fa-mobile-alt service-item-icon"></i>
+                        <div class="service-item-title">Mobile Legends</div>
+                    </li>
+                    <li class="service-item">
+                        <i class="fas fa-wallet service-item-icon"></i>
+                        <div class="service-item-title">Открытие Yoomoney Кошелька</div>
+                    </li>
+                    <li class="service-item">
+                        <i class="fas fa-chart-line service-item-icon"></i>
+                        <div class="service-item-title">Накрутка в Соц. Сетях</div>
+                    </li>
+                </ul>
+                <div style="text-align: center; margin-top: 1.5rem;">
+                    <a href="javascript:void(0)" class="btn" onclick="openModal()" style="max-width: 300px; margin: 0 auto;">
+                        <i class="fas fa-envelope"></i> Связаться для заказа
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="badges">
+            <div class="badge">
+                <i class="fas fa-rocket"></i>
+                <div class="badge-title">Мгновенно</div>
+                <div class="badge-desc">Доставка за минуты</div>
+            </div>
+            <div class="badge">
+                <i class="fas fa-lock"></i>
+                <div class="badge-title">Безопасно</div>
+                <div class="badge-desc">Защищенные платежи</div>
+            </div>
+            <div class="badge">
+                <i class="fas fa-headset"></i>
+                <div class="badge-title">Поддержка 7/24</div>
+                <div class="badge-desc">Всегда на связи</div>
+            </div>
+            <div class="badge">
+                <i class="fas fa-certificate"></i>
+                <div class="badge-title">Проверенный</div>
+                <div class="badge-desc">Тысячи клиентов</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="contactModal">
+        <div class="modal-content">
+            <h2 class="modal-title">Выберите способ связи</h2>
+            <p class="modal-subtitle">Где вам удобнее написать?</p>
+            <div class="modal-buttons">
+                <a href="https://t.me/tmLinux" class="modal-btn" target="_blank">
+                    <i class="fab fa-telegram"></i>
+                    <span>Написать в Telegram</span>
+                </a>
+                <a href="https://linkm.me/users/tmlinux" class="modal-btn" target="_blank">
+                    <i class="fas fa-link"></i>
+                    <span>Написать через Link</span>
+                </a>
+                <a href="https://www.instagram.com/tmlinux1?igsh=MWRkaDVtMjIzYjN4Ng==" class="modal-btn" target="_blank">
+                    <i class="fab fa-instagram"></i>
+                    <span>Написать в Instagram</span>
+                </a>
+                <a href="javascript:void(0)" class="modal-btn" onclick="copyImo()">
+                    <i class="fas fa-comment-dots"></i>
+                    <span>Скопировать Imo ID</span>
+                </a>
+            </div>
+            <div class="modal-close" onclick="closeModal()">Закрыть</div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <h3><i class="fas fa-bolt"></i> tmLinux Store</h3>
+                <p style="color: var(--text-gray); margin-bottom: 1rem;">Премиальные цифровые продукты и услуги</p>
+                
+                <div class="footer-contacts">
+                    <a href="https://t.me/tmLinux" class="footer-contact" target="_blank">
+                        <i class="fab fa-telegram"></i>
+                        <span><strong>Telegram:</strong> @tmLinux</span>
+                    </a>
+                    <a href="https://linkm.me/users/tmlinux" class="footer-contact" target="_blank">
+                        <i class="fas fa-link"></i>
+                        <span><strong>Link:</strong> tmlinux</span>
+                    </a>
+                    <a href="https://www.instagram.com/tmlinux1?igsh=MWRkaDVtMjIzYjN4Ng==" class="footer-contact" target="_blank">
+                        <i class="fab fa-instagram"></i>
+                        <span><strong>Instagram:</strong> @tmlinux1</span>
+                    </a>
+                    <a href="javascript:void(0)" class="footer-contact" onclick="copyImo()">
+                        <i class="fas fa-comment-dots"></i>
+                        <span><strong>Imo ID:</strong> tmLinux1</span>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="disclaimer">
+                <strong><i class="fas fa-exclamation-triangle"></i> Важно:</strong> 
+                Мы независимый продавец цифровых продуктов. Не связаны с компаниями-производителями. Все бренды принадлежат их владельцам. Проверяйте данные перед покупкой.
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2024 tmLinux Store. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function toggleSection(header) {
+            const content = header.nextElementSibling;
+            const toggle = header.querySelector('.section-toggle');
+            
+            const isActive = content.classList.contains('active');
+            
+            if (isActive) {
+                content.classList.remove('active');
+                toggle.classList.remove('active');
+                header.classList.remove('active');
+            } else {
+                content.classList.add('active');
+                toggle.classList.add('active');
+                header.classList.add('active');
+            }
+        }
+
+        function openModal() {
+            document.getElementById('contactModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('contactModal').classList.remove('active');
+        }
+
+        function copyImo() {
+            const imoId = 'tmLinux1';
+            navigator.clipboard.writeText(imoId).then(function() {
+                alert('Imo ID скопирован: ' + imoId);
+            }).catch(function() {
+                prompt('Скопируйте Imo ID:', imoId);
+            });
+        }
+
+        document.getElementById('contactModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
